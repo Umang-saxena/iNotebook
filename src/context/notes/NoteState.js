@@ -5,7 +5,7 @@ import NoteContext from './noteContext'
 const NoteState=( props )=>{
    const notesInitial=[
     {
-      "_id": "64d77986d440cc4c72b87105",
+      "_id": "64d77986d440cc4c72b3387105",
       "user": "64d3e807843b2d81d49a2dca",
       "title": "My Title",
       "description": "Fguyjgte",
@@ -14,7 +14,70 @@ const NoteState=( props )=>{
       "__v": 0
     },
     {
-      "_id": "64db393393da98a924bf6eaa",
+      "_id": "64d77986d440c3c4c72b87105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d43340cc4c72b87105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d2440cc4c72b87105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d440cc4c72b63287105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d440cc4c72b817105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d440cc4c7332b687105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64d77986d440cc4c72b687105",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": "My Title",
+      "description": "Fguyjgte",
+      "tag": "Personal",
+      "date": "2023-08-12T12:22:30.102Z",
+      "__v": 0
+    },
+    {
+      "_id": "64db393393da984a924bf6eaa",
       "user": "64d3e807843b2d81d49a2dca",
       "title": "My Title",
       "description": "Fguyjgte",
@@ -23,7 +86,7 @@ const NoteState=( props )=>{
       "__v": 0
     },
     {
-      "_id": "64db393c93da98a924bf6ead",
+      "_id": "64db393c93da98a9245bf6ead",
       "user": "64d3e807843b2d81d49a2dca",
       "title": "My Title",
       "description": "Fguyjgte",

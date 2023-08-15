@@ -6,7 +6,6 @@ const Navbar = () => {
   let location = useLocation();
 
   useEffect(() => {
-    console.log(location.pathN);
   }, [location]);
   return (
     <nav className="navbar bg-dark border-bottom border-body navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
