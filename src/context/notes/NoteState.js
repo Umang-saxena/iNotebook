@@ -86,7 +86,7 @@ const NoteState=( props )=>{
       "__v": 0
     },
     {
-      "_id": "64db393c93da98a9245bf6ead",
+      "_id": "64db393c93da9ede8a9245bf6ead",
       "user": "64d3e807843b2d81d49a2dca",
       "title": "My Title",
       "description": "Fguyjgte",
@@ -96,9 +96,38 @@ const NoteState=( props )=>{
     }
   ]
 
-  const [notes, setNotes] = useState(notesInitial)
+  const [notes, setNotes] = useState(notesInitial);
+
+  // Add a Note
+  const addNote = ( title,description,tag )=>{
+    //  TODO Api Call Pending
+    const note= {
+      "_id": "64db393c93da98a9245bf6ead",
+      "user": "64d3e807843b2d81d49a2dca",
+      "title": title,
+      "description": description,
+      "tag": tag,
+      "date": "2023-08-15T08:37:16.332Z",
+      "__v": 0
+    }
+    setNotes(notes.concat(note));
+  }
+
+  // Delete a Note
+const deleteNote = ()=>{
+
+    
+  }
+
+  // Edit a note
+  const editNote = ()=>{
+
+    
+  }
+
+
     return (
-            <NoteContext.Provider value={{ notes,setNotes }} > 
+            <NoteContext.Provider value={{ notes,addNote,deleteNote,editNote }} > 
                 { props.children }
             </NoteContext.Provider>
 
