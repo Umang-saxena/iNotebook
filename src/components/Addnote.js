@@ -1,4 +1,4 @@
-import React,{ useContext,useState } from 'react'
+import React,{ useContext,useState } from 'react';
 import noteContext from "../context/notes/noteContext";
 
 const Addnote = () => {
@@ -12,9 +12,9 @@ const Addnote = () => {
     e.preventDefault();  // Used to prevemty page reload on submit
     addNote(note.title,note.description,note.tag);
   }
-  const onChange=( e)=>{
+  const onChange=(e)=>{
     // Keeping the previous value of note as same and adding the{ name:value} to it
-    setNote({...note,[e.target.name]:e.target.value})
+    setNote({...note,[e.target.name]:e.target.value});
 
   }
   return (
@@ -22,14 +22,18 @@ const Addnote = () => {
     <h2>Add a Note</h2>
     <form>
         <div className="mb-3 my-3">
-            <label htmlform="title" className="form-label" name='title'>Title</label>
+            <label htmlform="title" className="form-label">Title</label>
             <input type="text" className="form-control" id="title" name="title" onChange={ onChange } aria-describedby="emailHelp"/>
         </div>
         <div className="mb-3">
-            <label htmlform="description" className="form-label" name= 'description'>Description</label>
+            <label htmlform="description" className="form-label">Description</label>
             <input type="text" className="form-control" id="description" name="description" onChange={ onChange }/>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+        <div className="mb-3">
+            <label htmlform="tag" className="form-label" >Tag</label>
+            <input type="text" className="form-control" id="tag" name="tag" onChange={ onChange }/>
+        </div>
+        <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
     </form>
     </div>
   )
