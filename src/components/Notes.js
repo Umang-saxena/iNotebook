@@ -8,22 +8,28 @@ import Addnote from './Addnote';
 
 const Notes = () => {
     const context = useContext(noteContext);
-    const { notes, getNotes,addNote } = context;
+    const { notes, getNotes,editNote } = context;
     useEffect(() => {
         getNotes();
-    }, []);
+    }, [getNotes]);
+
     // Use State Hook
-    const [note, setNote] = useState({etitle:"",edescription:"",etag:""});
+    const [note, setNote] = useState({eid:"",etitle:"",edescription:"",etag:""});
     // Use Ref Hook for opening edit modal dynamically using js
     const ref = useRef(null)
+    // Use ref Hook for clicking on close button dynamically when someone clicks update button of modal
+    const refClose = useRef(null)
+
 
 //Handling Submit Button
-    const handleClick=(e)=>{
-    console.log("Updating Note .....");
-    console.log(note);
-    e.preventDefault();  // Used to prevemty page reload on submit
-    // addNote(note.title,note.description,note.tag);
+    const handleClick= async () =>{
+    editNote(note.eid,note.etitle,note.edescription,note.etag);
+    refClose.current.click();
+    // addNote(note.etitle,note.edescription,note.etag);
   }
+
+
+
   const onChange=(e)=>{
     // Keeping the previous value of note as same and adding the{ name:value} to it
     setNote({...note,[e.target.name]:e.target.value});
@@ -32,7 +38,7 @@ const Notes = () => {
 //   Handling Update note function
 const updateNote=(currentNote)=>{
     ref.current.click();
-    setNote({etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag});
+    setNote({eid:currentNote._id,etitle:currentNote.title,edescription:currentNote.description,etag:currentNote.tag});
 }
 
     return (
@@ -67,7 +73,7 @@ const updateNote=(currentNote)=>{
                             </form>
                         </div>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" className="btn btn-primary" onClick={handleClick} >Update </button>
                         </div>
                     </div>

@@ -48,6 +48,8 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({title,description,tag})
     });
+    const json= (await response).json();
+    console.log(json);
 
     const note = {
       "_id": "64db393c93da98a9245bf6ead",
@@ -94,14 +96,15 @@ const NoteState = (props) => {
     const url = host + `/api/notes/updatenote/${id}`;
     // API CALL 
     const response = await fetch(url, {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
       },
       body: JSON.stringify({title,description,tag})
     });
-  
+    const json=await response.json();
+    console.log(json);
 
 
 
@@ -110,9 +113,9 @@ const NoteState = (props) => {
     for (let index = 0; index < notes.length; index++) {
       const element = notes[index];
       if (element._id === id) {
-        element.title = title;
-        element.description = description;
-        element.tag = tag;
+        notes[index].title = title;
+        notes[index].description = description;
+        notes[index].tag = tag;
       }
     }
 
