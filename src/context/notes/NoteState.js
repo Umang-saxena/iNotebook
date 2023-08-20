@@ -24,43 +24,44 @@ const NoteState = (props) => {
     //  TODO Api Call Pending
     const url = host + `/api/notes/fetchallnotes`;
     // API CALL 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
-      },
-    });
-    const json = await response.json();
-    // console.log(json);
-    setNotes(json);
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
+        },
+      });
+      const json = await response.json();
+      // console.log(json);
+      setNotes(json);
+      
+    } catch (error) {
+      console.log("Error" ,error);
+    }
   }
+
+
   // Add a Note
   const addNote = async (title, description, tag) => {
     //  TODO Api Call Pending
     const url = host + `/api/notes/addnote`;
     // API CALL 
-    const response = fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
-      },
-      body: JSON.stringify({title,description,tag})
-    });
-    const json= (await response).json();
-    console.log(json);
-
-    const note = {
-      "_id": "64db393c93da98a9245bf6ead",
-      "user": "64d3e807843b2d81d49a2dca",
-      "title": title,
-      "description": description,
-      "tag": tag,
-      "date": "2023-08-15T08:37:16.332Z",
-      "__v": 0
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
+        },
+        body: JSON.stringify({title,description,tag})
+      });
+      const note= await response.json();
+      setNotes(notes.concat(note));
+    
+    } catch (error) {
+      console.log("Error" ,error);
     }
-    setNotes(notes.concat(note));
   }
 
   // Delete a Note
@@ -69,59 +70,58 @@ const NoteState = (props) => {
     // Deleting from database
     const url = host + `/api/notes/deletenote/${id}`;
     // API CALL 
-    const response = await fetch(url, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
-      },
-    });
-    const json = response.json();
-    console.log(json);
+    try {
+      
+      const response = await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
+        },
+      });
+      const json = response.json();
+      console.log(json);  
+      // Deleting from Clients Side
+      console.log("Deleting note with id" + id);
+      const newNote = notes.filter((note) => { return note._id !== id });
+      setNotes(newNote);
+    } catch (error) {
+      console.log("Error" ,error);
 
-
-
-    // Deleting from Clients Side
-    console.log("Deleting note with id" + id);
-    const newNote = notes.filter((note) => { return note._id !== id });
-    setNotes(newNote);
+    }
   }
-
-
 
 
 
   // Edit a note
   const editNote = async (id, title, description, tag) => {
     const url = host + `/api/notes/updatenote/${id}`;
-    // API CALL 
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
-      },
-      body: JSON.stringify({title,description,tag})
-    });
-    const json=await response.json();
-    console.log(json);
+    // API CALL
+    try {
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDNlODA3ODQzYjJkODFkNDlhMmRjYSIsImlhdCI6MTY5MTgyMjQ0N30.hjDwoEgB8ZcYvQ-Z6Nj2fqDYj4cCJevp1-Qnteqbkis'
+        },
+        body: JSON.stringify({title,description,tag})
+      });
+      const json=await response.json();
+      console.log(json);
 
-
-
-
-    // Logic to edit in client
-    for (let index = 0; index < notes.length; index++) {
-      const element = notes[index];
-      if (element._id === id) {
-        notes[index].title = title;
-        notes[index].description = description;
-        notes[index].tag = tag;
+  
+      // Logic to edit in client
+      for (let index = 0; index < notes.length; index++) {
+        const element = notes[index];
+        if (element._id === id) {
+          notes[index].title = title;
+          notes[index].description = description;
+          notes[index].tag = tag;
+        }
       }
-    }
-
-
-  }
-
+    } catch (error) {
+      console.log("Error" ,error);
+    } }
 
   return (
     <NoteContext.Provider value={{ notes, addNote, deleteNote, editNote,getNotes }} >
