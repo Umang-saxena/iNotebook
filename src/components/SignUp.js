@@ -1,9 +1,11 @@
-import React,{useState} from 'react'
+import React,{useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+
 
 const SignUp = () => {
 
   const [credentials, setCredentials] = useState({name:"",email: "", password: "",cpassword:""});
-
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = "http://localhost:5000/api/auth/createuser";
@@ -20,7 +22,7 @@ const SignUp = () => {
         if ( json.success ){
             // Save the authtoken and redirect
             localStorage.setItem('token',json.authToken);
-            Navigate('/'); // To redirect the page after successful signup
+            navigate('/'); // To redirect the page after successful signup
         }   
         else{
             alert(' Invalid Credentials');

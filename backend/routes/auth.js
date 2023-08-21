@@ -8,7 +8,6 @@ var fetchuser = require('../middleware/fetchUser');
 
 
 const JWT_SECRET = "UmangSaxena@";  //JWT secret variable for using  jwt web token
-
 //Route 1: Create a User using: POST "/api/auth/createuser". No Login required
 
 router.post("/createuser", [
@@ -18,7 +17,6 @@ router.post("/createuser", [
 ], async (req, res) => {
 // Empty Nmae Validtions
   const errors = validationResult(req);
-  let success=false;
   if (!errors.isEmpty()) {
     return res.status(400).json({
       errors: errors.array()
@@ -31,7 +29,7 @@ router.post("/createuser", [
       // Check if user with the same email already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({success, error:" Sorry !! A User with same email already exists" });
+        return res.status(400).json({ error:" Sorry !! A User with same email already exists" });
       }
       
       
@@ -46,14 +44,12 @@ router.post("/createuser", [
           id: user.id
         }
         const authToken= jwt.sign( data, JWT_SECRET );
-        success=true;
-        res.json({success, authToken });
+        res.json({ authToken });
         await user.save();
         return res.status(201);
       } catch (error) {
-        success=false;
         console.error(error);
-        return res.status(500).send({success,msg:"Some Error occured"} );
+        return res.status(500).send("Some Error occured" );
       }
     }
   );
@@ -65,7 +61,6 @@ router.post("/login", [
   body('email').optional().trim().isEmail().withMessage('Not a valid e-mail address'),
   body('password').exists().withMessage("Password must be atleast 5 characters"),
 ], async (req, res) => {
-  let success=false;  // Success variable is added to ckeck validations while api is called from client side 
   // Checking Error in th entered data
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -83,9 +78,7 @@ router.post("/login", [
     
     const passwordCompare= await bcrypt.compare(password,user.password);
     if( !passwordCompare ){
-      success=false;
-      return res.status(400).json({success,error:"Double Check the Entered Credentials"});
-
+      return res.status(400).json({error:"Double Check the Entered Credentials"});
 
     }
     // Sending Data
@@ -93,8 +86,7 @@ router.post("/login", [
       id: user.id
     }
     const authToken= jwt.sign( data, JWT_SECRET );
-    success=true;
-    res.json({ success,authToken });
+    res.json({ authToken });
 
   } catch (error) {
     console.error(error);
