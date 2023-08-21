@@ -33,7 +33,6 @@ const Notes = () => {
   const onChange=(e)=>{
     // Keeping the previous value of note as same and adding the{ name:value} to it
     setNote({...note,[e.target.name]:e.target.value});
-
   }
 //   Handling Update note function
 const updateNote=(currentNote)=>{
