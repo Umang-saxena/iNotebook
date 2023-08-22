@@ -2,7 +2,7 @@ import React,{ useContext,useState } from 'react';
 import noteContext from "../context/notes/noteContext";
 // import Notes from './Notes';
 
-const Addnote = () => {
+const Addnote = (props) => {
   const context = useContext(noteContext);
   const { addNote }=context;
   // Use Change hook for handling onchange function
@@ -13,6 +13,7 @@ const Addnote = () => {
     e.preventDefault();  // Used to prevemty page reload on submit
     addNote(note.title,note.description,note.tag);
     setNote({title:"",description:"",tag:""});   
+    props.showAlert("Added Successfully","success");
 
   }
   const onChange=(e)=>{
