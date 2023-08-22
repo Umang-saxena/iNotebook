@@ -17,8 +17,11 @@ router.post("/createuser", [
 ], async (req, res) => {
 // Empty Nmae Validtions
   const errors = validationResult(req);
+  let success=false;
   if (!errors.isEmpty()) {
+    success=false;
     return res.status(400).json({
+      success,
       errors: errors.array()
     });
   }
@@ -29,9 +32,9 @@ router.post("/createuser", [
       // Check if user with the same email already exists
       const existingUser = await User.findOne({ email });
       if (existingUser) {
-        return res.status(400).json({ error:" Sorry !! A User with same email already exists" });
+        success=false;
+        return res.status(400).json({ success,error:" Sorry !! A User with same email already exists" });
       }
-      
       
         const salt= await bcrypt.genSalt(10);
         const securedPassword= await bcrypt.hash( password,salt );
@@ -44,12 +47,14 @@ router.post("/createuser", [
           id: user.id
         }
         const authToken= jwt.sign( data, JWT_SECRET );
-        res.json({ authToken });
+        success=true;
+        res.json({ success,authToken });
         await user.save();
         return res.status(201);
       } catch (error) {
+        success=false;
         console.error(error);
-        return res.status(500).send("Some Error occured" );
+        return res.status(500).send({success,error:"Some Error occured" });
       }
     }
   );
@@ -63,6 +68,7 @@ router.post("/login", [
 ], async (req, res) => {
   // Checking Error in th entered data
   const errors = validationResult(req);
+  let success=false;
   if (!errors.isEmpty()) {
     return res.status(400).json({
       errors: errors.array()
@@ -73,12 +79,14 @@ router.post("/login", [
   try {
     let user= await User.findOne({email});
     if( !user ){
-      return res.status(400).json({error:"Double Check the Entered Credentials"});
+      success=false;
+      return res.status(400).json({success,error:"Double Check the Entered Credentials"});
     }
     
     const passwordCompare= await bcrypt.compare(password,user.password);
     if( !passwordCompare ){
-      return res.status(400).json({error:"Double Check the Entered Credentials"});
+      success=false;
+      return res.status(400).json({success,error:"Double Check the Entered Credentials"});
 
     }
     // Sending Data
@@ -86,15 +94,13 @@ router.post("/login", [
       id: user.id
     }
     const authToken= jwt.sign( data, JWT_SECRET );
-    res.json({ authToken });
+    success=true;
+    res.json({ success,authToken });
 
   } catch (error) {
     console.error(error);
-        return res.status(500).send("Internal Server Error Occured" );
-        
-      }
-      
-      
+        return res.status(500).send({success,error:"Internal Server Error Occured" });
+      }      
     })  
     
     
@@ -103,13 +109,17 @@ router.post("/login", [
 router.post("/getuser",fetchuser, async (req, res) => {
 try {
   const userId=req.user.id;
+  let success=false;
   const user= await User.findById(userId).select( "-password" );  // -password will not send password to the response body
-  res.send(user);
+  res.send(success,user);
 } catch (error) {
+  success=false;
   console.error(error);
-      return res.status(500).send("Internal Server Error Occured" );
+      return res.status(500).send({success,error:"Internal Server Error Occured"} );
 }
 });
+
+
 module.exports = router
 
 
