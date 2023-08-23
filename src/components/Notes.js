@@ -12,7 +12,7 @@ const Notes = (props) => {
     const navigate=useNavigate();
     const { notes, getNotes,editNote } = context;
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (!localStorage.getItem('token')) {
             navigate('/login')
         } else { 
             getNotes();
